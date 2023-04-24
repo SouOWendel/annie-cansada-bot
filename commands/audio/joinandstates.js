@@ -1,17 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { Client, GuildVoiceStates, SlashCommandBuilder } from 'discord.js';
-import { generateDependencyReport, VoiceConnectionStatus, AudioPlayerStatus, entersState, joinVoiceChannel } from '@discordjs/voice';
+import { VoiceConnectionStatus, AudioPlayerStatus, joinVoiceChannel } from '@discordjs/voice';
 
 // Função para verificação de dependências essenciais e opcionais.
 // console.log(generateDependencyReport());
 
 export const data = new SlashCommandBuilder()
-	.setName('server')
-	.setDescription('Provides information about the server.');
+	.setName('entrar')
+	.setDescription('Comando para entrar no canal de voz.');
 
 // Create a new client instance
 const player = new Client({ intents: [GuildVoiceStates] });
-
-void start();
 
 export async function execute(interaction) {
 
