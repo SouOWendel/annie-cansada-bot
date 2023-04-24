@@ -1,6 +1,6 @@
 /* eslint-disable brace-style */
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { request } from 'undici';
+// import { request } from 'undici';
 
 // https://old.discordjs.dev/#/docs/builders/main/class/SlashCommandBuilder?scrollTo=options
 export const data = new SlashCommandBuilder()
@@ -14,7 +14,7 @@ export async function execute(interaction) {
     // const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 
 		const term = interaction.options.getString('term');
-		const query = new URLSearchParams({ term });
+		// const query = new URLSearchParams({ term });
 
 		const url = `https://dicio-api-ten.vercel.app/v2/significados/${term}`;
 		console.log(url);
