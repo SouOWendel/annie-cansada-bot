@@ -2,6 +2,7 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 // import { request } from 'undici';
 
+// API de Dicionário utilizada aqui: https://github.com/ThiagoNelsi/dicio-api/
 // https://old.discordjs.dev/#/docs/builders/main/class/SlashCommandBuilder?scrollTo=options
 export const data = new SlashCommandBuilder()
 	.setName('define')
