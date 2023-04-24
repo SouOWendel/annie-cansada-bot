@@ -1,11 +1,16 @@
-import { Client, GuildVoiceStates } from 'discord.js';
-import { generateDependencyReport, VoiceConnectionStatus, AudioPlayerStatus, entersState, joinVoiceChannel } from '@discordjs/voice';
+/* eslint-disable brace-style */
+import { Client, GuildVoiceStates, SlashCommandBuilder } from 'discord.js';
+import { AudioPlayerStatus, entersState } from '@discordjs/voice';
+
+export const data = new SlashCommandBuilder()
+	.setName('play')
+	.setDescription('O comando que seria para tocar um áudio.');
 
 // Create a new client instance
 const player = new Client({ intents: [GuildVoiceStates] });
 
 async function start() {
-	player.play(resource);
+	player.play('./MachampMaconha(128kbps).ogg');
 	try {
 		await entersState(player, AudioPlayerStatus.Playing, 5_000);
 		// The player has entered the Playing state within 5 seconds
@@ -17,3 +22,4 @@ async function start() {
 		console.error(error);
 	}
 }
+void start();
