@@ -28,5 +28,5 @@ export async function execute(interaction) {
 		console.log('Audio player is in the Playing state!');
 	});
 
-	await interaction.reply(`This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`);
+	await interaction.reply(`A conexão foi feita em ${interaction.channel.id}.`);
 }

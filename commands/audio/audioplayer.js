@@ -9,8 +9,10 @@ export const data = new SlashCommandBuilder()
 // Create a new client instance
 const player = new Client({ intents: [GuildVoiceStates] });
 
-async function start() {
-	player.play('./MachampMaconha(128kbps).ogg');
+const audiourl = './MachampMaconha(128kbps).ogg';
+
+async function start(audio) {
+	player.play(audio);
 	try {
 		await entersState(player, AudioPlayerStatus.Playing, 5_000);
 		// The player has entered the Playing state within 5 seconds
@@ -23,3 +25,7 @@ async function start() {
 	}
 }
 void start();
+export async function execute(interaction) {
+    await interaction.reply(start(audiourl));
+    console.log('Tocando... Nome do áudio: ' + audiourl);
+}
