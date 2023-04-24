@@ -16,6 +16,7 @@
   "author": "Wendel and Shay DeWael",
   "license": "MIT",
   "dependencies": {
+    "@discordjs/opus": "^0.9.0",
     "@discordjs/voice": "^0.16.0",
     "body-parser": "^1.20.2",
     "discord-interactions": "^3.2.0",
@@ -23,6 +24,8 @@
     "dotenv": "^16.0.3",
     "eris": "^0.17.2",
     "express": "^4.18.2",
+    "ffmpeg-static": "^5.1.0",
+    "libsodium-wrappers": "^0.7.11",
     "node-fetch": "^3.3.0"
   },
   "devDependencies": {
