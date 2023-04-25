@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { verifyKey } from 'discord-interactions';
 
 export function VerifyDiscordRequest(clientKey) {
-  return function (req, res, buf, encoding) {
+  return function(req, res, buf) {
     const signature = req.get('X-Signature-Ed25519');
     const timestamp = req.get('X-Signature-Timestamp');
 
@@ -27,7 +27,7 @@ export async function DiscordRequest(endpoint, options) {
       'Content-Type': 'application/json; charset=UTF-8',
       'User-Agent': 'DiscordBot (https://github.com/discord/discord-example-app, 1.0.0)',
     },
-    ...options
+    ...options,
   });
   // throw API errors
   if (!res.ok) {
@@ -51,12 +51,13 @@ export async function InstallGlobalCommands(appId, commands) {
   }
 }
 
-// Simple method that returns a random emoji from list
+// Um método simples que retorna um emoji aleatório. Quero adicionar tipos de emoções no futuro como parametro e ifs.
 export function getRandomEmoji() {
-  const emojiList = ['😭','😄','😌','🤓','😎','😤','🤖','😶‍🌫️','🌏','📸','💿','👋','🌊','✨'];
+  const emojiList = ['😭', '😄', '😌', '🤓', '😎', '😤', '🤖', '😶‍🌫️', '🌏', '📸', '💿', '👋', '🌊', '✨'];
   return emojiList[Math.floor(Math.random() * emojiList.length)];
 }
 
+// Função para deixar uma string com a primeira letra maiuscula.
 export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
