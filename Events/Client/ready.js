@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { Client } from 'discord.js';
 
 export default {
@@ -5,5 +6,5 @@ export default {
     once: true,
     execute(client) {
         console.log(`${client.user.username} agora está online.`);
-    }
+    },
 };
