@@ -1,5 +1,0 @@
-token
-178f8472eeb9fb8a64488bebc36eec0dfb2b4623041c2f2a84d735e341b230ee
-
-client secret
-vSEwzMntgKwpuyxvpVQ6xkuJxZJGYAsY
