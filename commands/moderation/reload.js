@@ -6,7 +6,7 @@ import { SlashCommandBuilder } from 'discord.js';
 // https://old.discordjs.dev/#/docs/builders/main/class/SlashCommandBuilder?scrollTo=options
 export const data = new SlashCommandBuilder()
     .setName('reload')
-    .setDescription('Reloads a command.')
+    .setDescription('Annie com muito esforço recarrega um comando para você. Não se esqueça de agradecer!')
     .addStringOption(option => option.setName('command')
         .setDescription('The command to reload.')
         .setRequired(true));

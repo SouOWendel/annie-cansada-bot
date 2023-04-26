@@ -3,7 +3,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } fro
 // https://old.discordjs.dev/#/docs/builders/main/class/SlashCommandBuilder?scrollTo=options
 export const data = new SlashCommandBuilder()
 	.setName('ban')
-	.setDescription('ban!')
+	.setDescription('Uma magia de banimento é conjurada em um alvo. Conte, porque a Annie conjurou essa magia?')
 	.addMentionableOption(option => option.setName('usuario')
         .setDescription('A pessoa que será banida.')
         .setRequired(true))
