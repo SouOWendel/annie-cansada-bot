@@ -13,7 +13,10 @@ export async function loadCommands(client) {
         for (const file of commandFiles) {
             const commandFile = await import(`../Commands/${folder}/${file}`);
 
-            client.commands.set(commandFile.data.name, commandFile);
+            // help.js properties
+            const properties = { folder, ...commandFile };
+
+            client.commands.set(commandFile.data.name, properties);
 
             commandsArray.push(commandFile.data.toJSON());
 
@@ -23,6 +26,5 @@ export async function loadCommands(client) {
     }
 
     client.application.commands.set(commandsArray);
-
     return console.log(table.toString(), '\nLoaded Commands');
 }
