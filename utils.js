@@ -57,6 +57,11 @@ export function getRandomEmoji() {
   return emojiList[Math.floor(Math.random() * emojiList.length)];
 }
 
+// Retorna um número aleatório baseado na quantidade de números.
+export function getRandomNumber(limit) {
+  return Math.floor(Math.random() * limit);
+}
+
 // Função para deixar uma string com a primeira letra maiuscula.
 export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
