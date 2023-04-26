@@ -9,20 +9,20 @@ export async function loadEvents(client) {
         const files = fs.readdirSync(`./Events/${folder}`).filter((file) => file.endsWith('js'));
 
         for (const file of files) {
-            const event = import(`../Events/${folder}/${file}`);
+            const event = await import(`../Events/${folder}/${file}`);
 
-            if (event.rest) {
-                if (event.once) {
-                    client.rest.once(event.name, (...args) =>
-                    event.execute(...args, client));
+            if (event.default.rest) {
+                if (event.default.once) {
+                    client.rest.once(event.default.name, (...args) =>
+                    event.default.execute(...args, client));
                 } else {
-                    client.rest.on(event.name, (...args) =>
-                    event.execute(...args, client));
+                    client.rest.on(event.default.name, (...args) =>
+                    event.default.execute(...args, client));
                 }
-            } else if (event.once) {
-                    client.once(event.name, (...args) => event.execute(...args, client));
+            } else if (event.default.once) {
+                    client.once(event.default.name, (...args) => event.default.execute(...args, client));
                 } else {
-                    client.on(event.name, (...args) => event.execute(...args, client));
+                    client.on(event.default.name, (...args) => event.default.execute(...args, client));
                 }
             table.addRow(file, 'loaded');
             continue;
