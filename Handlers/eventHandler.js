@@ -10,7 +10,6 @@ export async function loadEvents(client) {
 
         for (const file of files) {
             const event = await import(`../Events/${folder}/${file}`);
-
             if (event.default.rest) {
                 if (event.default.once) {
                     client.rest.once(event.default.name, (...args) =>
@@ -28,5 +27,5 @@ export async function loadEvents(client) {
             continue;
         }
     }
-    return console.log(table.toString(), '\nLoaded events');
+    return console.log(table.toString(), 'Eventos carregados com sucesso!');
 }
