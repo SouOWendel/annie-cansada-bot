@@ -10,25 +10,28 @@ export const data = new SlashCommandBuilder()
     .addStringOption(option => option.setName('command')
         .setDescription('The command to reload.')
         .setRequired(true));
+
 export async function execute(interaction) {
     const commandName = interaction.options.getString('command', true).toLowerCase();
     console.log(commandName);
-		const command = interaction.client.commands.get(interaction.commandName);
+        const command = interaction.client.commands.get(interaction.commandName);
         // console.log(command);
         // console.log(interaction.client.commands);
-		if (!command) {
-			return interaction.reply(`There is no command with name \`${commandName}\`!`);
-		}
+        if (!command) {
+            return interaction.reply(`There is no command with name \`${commandName}\`!`);
+        }
+
         console.log('Nome do Comando: ' + command.data.name);
         console.log('cache:' + require.cache[require.resolve(`./${command.data.name}.js`)]);
+
         delete require.cache[require.resolve(`./${command.data.name}.js`)];
-		try {
+        try {
             interaction.client.commands.delete(command.data.name);
             const newCommand = await import(`./${command.data.name}.js`);
             interaction.client.commands.set(newCommand.data.name, newCommand);
-        await interaction.reply(`Command \`${newCommand.data.name}\` was reloaded!`);
+        await interaction.reply(`Comando \`${newCommand.data.name}\` foi recarregado!`);
         } catch (error) {
             console.error(error);
-            await interaction.reply(`There was an error while reloading a command \`${command.data.name}\`:\n\`${error.message}\``);
-		}
+            await interaction.reply(`Ocorreu um erro ao tentar recarregar o comando \`${command.data.name}\`:\n\`${error.message}\``);
+        }
 }
