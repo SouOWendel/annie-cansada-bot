@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
+import { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } from 'discord.js';
 
 export const data = new SlashCommandBuilder()
 	.setName('ping')
@@ -6,5 +6,9 @@ export const data = new SlashCommandBuilder()
 	.setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
 
 export async function execute(interaction) {
-	interaction.reply({ content: 'Pong!', ephemeral: true });
+
+	const embed = new EmbedBuilder()
+		.setDescription(`Pong! ${interaction.client.ws.ping}ms`);
+
+	interaction.reply({ embeds: [embed], ephemeral: false });
 }
