@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { PIADAS_PERGUNTA_RESPOSTA } from '../../Data/dataPiadas.js';
-import { getRandomNumber } from '../../utils.js';
+import { getRandomNumber } from '../../Utils/random.js';
 
 export const data = new SlashCommandBuilder()
 	.setName('piada')
