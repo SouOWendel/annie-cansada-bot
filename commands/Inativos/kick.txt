@@ -1,0 +1,66 @@
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js';
+
+// https://old.discordjs.dev/#/docs/builders/main/class/SlashCommandBuilder?scrollTo=options
+export const data = new SlashCommandBuilder()
+	.setName('expulsar')
+	.setDescription('Uma magia de expulsão é conjurada em um alvo. Conte, porque a Annie conjurou essa magia?')
+    .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+	.addMentionableOption(option => option.setName('usuario')
+        .setDescription('A pessoa que será expulsa.')
+        .setRequired(true))
+	.addStringOption(option => option.setName('razao')
+		.setDescription('Qual é a razão para a expulsão?')
+		.setRequired(false));
+
+export async function execute(interaction) {
+
+	const target = interaction.options.getUser('usuario');
+	const reason = interaction.options.getString('razao') ?? 'Nenhuma razão foi informada.';
+
+    const member = await interaction.guild.members.fetch(target.id);
+
+    const errEmbed = new EmbedBuilder()
+        .setDescription(`Você não pode expulsar ${target.username} ele tem um cargo muito alto.`)
+        .setColor(0xc723b);
+
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) {
+        return interaction.reply({ embeds: errEmbed });
+    }
+
+    // Criação dos botões e row
+	const confirm = new ButtonBuilder()
+		.setCustomId('confirm')
+		.setLabel('Confirmar Expulsão')
+		.setStyle(ButtonStyle.Danger);
+
+	const cancel = new ButtonBuilder()
+		.setCustomId('cancel')
+		.setLabel('Cancelar')
+		.setStyle(ButtonStyle.Secondary);
+
+	const row = new ActionRowBuilder()
+		.addComponents(cancel, confirm);
+
+    // Coleta dos dados da interação com components. (const response)
+	const response = await interaction.reply({
+		content: `Você quer banir ${target} pela razão: ${reason}?`,
+		components: [row],
+	});
+
+    const collectorFilter = i => i.user.id === interaction.user.id;
+
+    try {
+        // Tempo de espera e coleta dos dados dos botões (components).
+        const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
+
+        // Botão de Confirmação e Cancelar
+        if (confirmation.customId === 'confirm') {
+            await interaction.guild.members.kick(target);
+            await confirmation.update({ content: `${target.username} foi banido pela razão: ${reason}`, components: [] });
+        } else if (confirmation.customId === 'cancel') {
+            await confirmation.update({ content: 'Você cancelou a solicitação.', components: [] });
+        }
+    } catch (e) {
+        await response.editReply({ content: 'Nenhuma confirmação foi recebida dentro de 1 minuto, a solicitação de expulsão foi cancelada', components: [] });
+    }
+}
