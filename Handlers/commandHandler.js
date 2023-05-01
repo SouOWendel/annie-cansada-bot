@@ -26,5 +26,5 @@ export async function loadCommands(client) {
     }
 
     client.application.commands.set(commandsArray);
-    return console.log(table.toString(), '\nLoaded Commands');
+    return console.log(table.toString(), 'Comandos carregados com sucesso!');
 }

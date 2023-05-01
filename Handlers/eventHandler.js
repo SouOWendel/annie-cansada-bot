@@ -10,23 +10,22 @@ export async function loadEvents(client) {
 
         for (const file of files) {
             const event = await import(`../Events/${folder}/${file}`);
-
             if (event.default.rest) {
                 if (event.default.once) {
-                    client.rest.once(event.default.name, (...args) =>
-                    event.default.execute(...args, client));
+                    client.rest.once(event.default.name, (...args) => event.default.execute(...args, client));
                 } else {
-                    client.rest.on(event.default.name, (...args) =>
-                    event.default.execute(...args, client));
+                    client.rest.on(event.default.name, (...args) => event.default.execute(...args, client));
                 }
             } else if (event.default.once) {
                     client.once(event.default.name, (...args) => event.default.execute(...args, client));
-                } else {
-                    client.on(event.default.name, (...args) => event.default.execute(...args, client));
-                }
+            } else if (event.default.distube) {
+                client.distube.on(event.default.name, (...args) => event.default.execute(...args, client));
+            } else {
+                client.on(event.default.name, (...args) => event.default.execute(...args, client));
+            }
             table.addRow(file, 'loaded');
             continue;
         }
     }
-    return console.log(table.toString(), '\nLoaded events');
+    return console.log(table.toString(), 'Eventos carregados com sucesso!');
 }
