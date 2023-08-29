@@ -3,7 +3,8 @@ node_modules
 config.json
 iniciar.bat
 discloud.config
-Debug
+debug
 *.zip
 *.rar
 discloud
+tatchs
