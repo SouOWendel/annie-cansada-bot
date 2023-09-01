@@ -6,5 +6,8 @@ discloud.config
 debug
 *.zip
 *.rar
+*.pcm
 discloud
-tatchs
+patchs
+debug
+ffmpeg
