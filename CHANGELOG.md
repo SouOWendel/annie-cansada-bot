@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.1](https://github.com/SouOWendel/Annie-Cansada/compare/v2.0.0...v2.0.1) (2023-09-08)
+
+
+### Bug Fixes
+
+* **changelog:** correção da versão inicial do changelog ([4d0fb1f](https://github.com/SouOWendel/Annie-Cansada/commit/4d0fb1f1fc50df8434077c4f36c17c944765fc04))
+* commit de teste ([c72c563](https://github.com/SouOWendel/Annie-Cansada/commit/c72c5637d3256c803727cd42d9c29e472ace7244))
+
 ## [2.0.0](https://github.com/SouOWendel/Annie-Cansada/compare/v1.0.0...v2.0.0) (2023-09-08)
 
 ### ⚠ BREAKING CHANGES
