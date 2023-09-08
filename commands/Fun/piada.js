@@ -8,18 +8,18 @@ export const data = new SlashCommandBuilder()
 
 export async function execute(interaction) {
 
-    const randomJoke = getRandomNumber(PIADAS_PERGUNTA_RESPOSTA.length);
+	const randomJoke = getRandomNumber(PIADAS_PERGUNTA_RESPOSTA.length);
 
-    const embed = new EmbedBuilder()
-    .setColor(2216478)
-    .setAuthor({ name: 'Piadas e Respostas', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
-    .addFields(
-        { name: PIADAS_PERGUNTA_RESPOSTA[randomJoke][0], value: PIADAS_PERGUNTA_RESPOSTA[randomJoke][1] },
-    )
-    .setThumbnail('https://i.imgur.com/AfFp7pu.png')
-    .setFooter({ text: 'Clique no spoiler para revelar a resposta da piada.', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
+	const embed = new EmbedBuilder()
+		.setColor(2216478)
+		.setAuthor({ name: 'Piadas e Respostas', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
+		.addFields(
+			{ name: PIADAS_PERGUNTA_RESPOSTA[randomJoke][0], value: PIADAS_PERGUNTA_RESPOSTA[randomJoke][1] },
+		)
+		.setThumbnail('https://i.imgur.com/AfFp7pu.png')
+		.setFooter({ text: 'Clique no spoiler para revelar a resposta da piada.', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
-    await interaction.reply({
-        embeds: [embed],
-    });
+	await interaction.reply({
+		embeds: [embed],
+	});
 }

@@ -1,30 +1,30 @@
 export async function loadCommands(client) {
-    // https://www.npmjs.com/package/ascii-table3
-    const { AsciiTable3 } = await import('ascii-table3');
-    const fs = await import('fs');
-    const table = new AsciiTable3().setHeading('Commands', 'Status');
+	// https://www.npmjs.com/package/ascii-table3
+	const { AsciiTable3 } = await import('ascii-table3');
+	const fs = await import('fs');
+	const table = new AsciiTable3().setHeading('Commands', 'Status');
 
-    const commandsArray = [];
+	const commandsArray = [];
 
-    const commandsFolder = fs.readdirSync('./Commands');
-    for (const folder of commandsFolder) {
-        const commandFiles = fs.readdirSync(`./Commands/${folder}`).filter((file) => file.endsWith('js'));
+	const commandsFolder = fs.readdirSync('./Commands');
+	for (const folder of commandsFolder) {
+		const commandFiles = fs.readdirSync(`./Commands/${folder}`).filter((file) => file.endsWith('js'));
 
-        for (const file of commandFiles) {
-            const commandFile = await import(`../Commands/${folder}/${file}`);
+		for (const file of commandFiles) {
+			const commandFile = await import(`../Commands/${folder}/${file}`);
 
-            // help.js properties
-            const properties = { folder, ...commandFile };
+			// help.js properties
+			const properties = { folder, ...commandFile };
 
-            client.commands.set(commandFile.data.name, properties);
+			client.commands.set(commandFile.data.name, properties);
 
-            commandsArray.push(commandFile.data.toJSON());
+			commandsArray.push(commandFile.data.toJSON());
 
-            table.addRow(file, 'loaded');
-            continue;
-        }
-    }
+			table.addRow(file, 'loaded');
+			continue;
+		}
+	}
 
-    client.application.commands.set(commandsArray);
-    return console.log(table.toString(), 'Comandos carregados com sucesso!');
+	client.application.commands.set(commandsArray);
+	return console.log(table.toString(), 'Comandos carregados com sucesso!');
 }
