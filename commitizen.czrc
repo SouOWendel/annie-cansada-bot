@@ -1,0 +1,4 @@
+# Configuração do Commitizen.
+{
+    "path": "./node_modules/cz-conventional-changelog"
+}
