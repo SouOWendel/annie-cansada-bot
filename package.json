@@ -1,6 +1,6 @@
 {
 	"name": "annie-cansada",
-	"version": "2.0.1",
+	"version": "2.1.0",
 	"description": "Annie Cansada, uma personagem de Devilline HQ que virou um bot multifuncional.",
 	"main": "index.js",
 	"type": "module",
