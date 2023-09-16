@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { generalErrorEmbed } from '../../Data/embeds.js';
+import { generalErrorEmbed } from '../../data/embeds.js';
 
 export const data = new SlashCommandBuilder()
 	.setName('nowplaying')

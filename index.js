@@ -6,9 +6,9 @@ import { DisTube, StreamType } from 'distube';
 import { SpotifyPlugin } from '@distube/spotify';
 import { YtDlpPlugin } from '@distube/yt-dlp';
 
-import { loadEvents } from './Handlers/eventHandler.js';
-import { loadCommands } from './Handlers/commandHandler.js';
-import { loadErrorHandler } from './Handlers/errorHandler.js';
+import { loadEvents } from './handlers/eventHandler.js';
+import { loadCommands } from './handlers/commandHandler.js';
+import { loadErrorHandler } from './handlers/errorHandler.js';
 
 const fs = await import('fs');
 

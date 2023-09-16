@@ -15,7 +15,7 @@ export async function execute(interaction) {
 	const minutes = Math.floor(interaction.client.uptime / 60000) % 60;
 	const seconds = Math.floor(interaction.client.uptime / 1000) % 60;
 
-	usagePercent(function(error, percent) {
+	usagePercent(function (error, percent) {
 		if (error) return interaction.reply({ content: `${error}` });
 
 		const memoryUsage = formatBytes(process.memoryUsage().heapUsed);
@@ -26,13 +26,27 @@ export async function execute(interaction) {
 			.setTitle('Informações do Bot')
 			.setColor('Blue')
 			.addFields(
-				{ name: 'Desenvolvedor', value: 'Sou o Wendel#1676', inline: true },
-				{ name: 'Nome de Usuário', value: 'Sou o Wendel#1676', inline: true },
+				{
+					name: 'Desenvolvedor',
+					value: 'Sou o Wendel#1676',
+					inline: true,
+				},
+				{
+					name: 'Nome de Usuário',
+					value: 'Sou o Wendel#1676',
+					inline: true,
+				},
 				{ name: 'ID', value: 'Sou o Wendel#1676', inline: true },
-				{ name: 'Data de Criação', value: '23/04/2023' },
+				{ name: 'data de Criação', value: '23/04/2023' },
 				{ name: 'Comando de ajuda', value: '/help' },
-				{ name: 'Tempo Online', value: ` \`${days}\` days, \`${hours}\` hours, \`${minutes}\` minutes and \`${seconds}\` seconds.` },
-				{ name: 'Ping (bot)', value: `${interaction.client.ws.ping}ms` },
+				{
+					name: 'Tempo Online',
+					value: ` \`${days}\` days, \`${hours}\` hours, \`${minutes}\` minutes and \`${seconds}\` seconds.`,
+				},
+				{
+					name: 'Ping (bot)',
+					value: `${interaction.client.ws.ping}ms`,
+				},
 				{ name: 'Node Versão', value: `${node}` },
 				{ name: 'Uso da CPU', value: `${cpu}%` },
 				{ name: 'Uso de Memória', value: `${memoryUsage}` },

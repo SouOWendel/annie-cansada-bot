@@ -1,7 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { generalErrorEmbed } from '../../Data/embeds.js';
-import { EndBehaviorType, entersState, VoiceConnectionStatus, joinVoiceChannel } from '@discordjs/voice';
+import { generalErrorEmbed } from '../../data/embeds.js';
+import {
+	EndBehaviorType,
+	entersState,
+	VoiceConnectionStatus,
+	joinVoiceChannel,
+} from '@discordjs/voice';
 import * as prism from 'prism-media';
 import { createWriteStream, unlinkSync } from 'fs';
 import { pipeline } from 'stream';
@@ -57,18 +62,21 @@ function createListeningStream(receiver, userId, user) {
 //         }).run();
 // }
 
-
 export async function execute(interaction, client) {
 	// const client = await import('../../index.js');
 	const { member, guild } = interaction;
 
 	const voiceChannel = member.voice.channel;
 	const embed = new EmbedBuilder();
-	let connection = await interaction.client.voiceManager.get(interaction.channel.guild.id);
+	let connection = await interaction.client.voiceManager.get(
+		interaction.channel.guild.id,
+	);
 	// console.log(interaction);
 
 	if (!voiceChannel) {
-		embed.setColor('Red').setDescription('Você precisa estar em um canal de voz!');
+		embed
+			.setColor('Red')
+			.setDescription('Você precisa estar em um canal de voz!');
 		return interaction.reply({ embeds: [embed], ephemeral: true });
 	}
 
@@ -92,25 +100,39 @@ export async function execute(interaction, client) {
 			receiver.speaking.on('start', (userId) => {
 				if (userId !== interaction.user.id) return;
 				/* create live stream to save audio */
-				createListeningStream(receiver, userId, client.users.cache.get(userId));
+				createListeningStream(
+					receiver,
+					userId,
+					client.users.cache.get(userId),
+				);
 			});
 
 			/* When user speaks in vc*/
 			receiver.speaking.on('start', (userId) => {
 				// if (userId !== interaction.author.id) return;
 				/* create live stream to save audio */
-				createListeningStream(receiver, userId, client.users.cache.get(userId));
+				createListeningStream(
+					receiver,
+					userId,
+					client.users.cache.get(userId),
+				);
 			});
 
-			return interaction.reply({ embeds: [{
-				'fields': [],
-				'color': 11418941,
-				'title': `🎙️ I am now recording ${voiceChannel.name}`,
-			}], ephemeral: true });
-
+			return interaction.reply({
+				embeds: [
+					{
+						fields: [],
+						color: 11418941,
+						title: `🎙️ I am now recording ${voiceChannel.name}`,
+					},
+				],
+				ephemeral: true,
+			});
 		} else if (connection) {
 			/* Send waiting message */
-			const msg = await interaction.channel.send('Please wait while I am preparing your recording...');
+			const msg = await interaction.channel.send(
+				'Please wait while I am preparing your recording...',
+			);
 			/* wait for 5 seconds */
 			// await sleep(5000);
 
@@ -133,7 +155,6 @@ export async function execute(interaction, client) {
 			//     }
 			//  });
 
-
 			// process.audio.fnExtractSoundToMP3(`${filename}.mp3`, async function(error, file) {
 			//         // edit message with recording as attachment
 			//         await msg.edit({
@@ -146,10 +167,13 @@ export async function execute(interaction, client) {
 			//         unlinkSync(`${filename}.mp3`);
 			//     });
 		}
-
 	} catch (err) {
 		console.log(err);
-		generalErrorEmbed.description = 'Ocorreu um erro, verifique o seu comando...';
-		return interaction.reply({ embeds: [generalErrorEmbed], ephemeral: true });
+		generalErrorEmbed.description =
+			'Ocorreu um erro, verifique o seu comando...';
+		return interaction.reply({
+			embeds: [generalErrorEmbed],
+			ephemeral: true,
+		});
 	}
 }
