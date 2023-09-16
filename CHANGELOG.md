@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/SouOWendel/annie-cansada-bot/compare/v2.0.1...v2.1.0) (2023-09-16)
+
+
+### Features
+
+* adaptação para os novo método de request e leitura dos cookies do YouTube ([3a1b7c1](https://github.com/SouOWendel/annie-cansada-bot/commit/3a1b7c1ff94e394eacaee9282077b9ac8b3e1281))
+* arquivo com os cookies do YouTube ([edebe3e](https://github.com/SouOWendel/annie-cansada-bot/commit/edebe3e30c0a50fcc7b14447f567add1aa2815e0))
+* **npm:** exclusão de algumas dependências e atualização do ytdl-core ([cc3b863](https://github.com/SouOWendel/annie-cansada-bot/commit/cc3b863a3d9cc9b09bc5b8b4b3fa8c0f7ff74f63))
+* **release-please:** troquei o input runs-on de Windows para Ubuntu ([5d5fffe](https://github.com/SouOWendel/annie-cansada-bot/commit/5d5fffed75b8c4470849db365380176c7b9940a3))
+
 ## [2.0.1](https://github.com/SouOWendel/Annie-Cansada/compare/v2.0.0...v2.0.1) (2023-09-08)
 
 
