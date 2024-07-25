@@ -2,8 +2,9 @@
 import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
 import 'dotenv/config';
 
-import { DisTube, StreamType } from 'distube';
+import { DisTube, isVoiceChannelEmpty } from 'distube';
 import { SpotifyPlugin } from '@distube/spotify';
+import { YouTubePlugin } from '@distube/youtube';
 import { YtDlpPlugin } from '@distube/yt-dlp';
 
 import { loadEvents } from './handlers/eventHandler.js';
@@ -27,15 +28,20 @@ const client = new Client({
 client.distube = new DisTube(client, {
 	emitNewSongOnly: false,
 	joinNewVoiceChannel: true,
-	leaveOnEmpty: true,
-	leaveOnStop: false,
+	// leaveOnEmpty: true,
+	// leaveOnStop: false,
 	nsfw: true,
-	emptyCooldown: 10,
-	leaveOnFinish: false /* Sair quando finalizar */,
+	// emptyCooldown: 10,
+	// leaveOnFinish: false /* Sair quando finalizar */,
 	emitAddSongWhenCreatingQueue: false,
-	plugins: [new SpotifyPlugin(), new YtDlpPlugin({ update: true })],
-	streamType: StreamType.OPUS,
-	youtubeCookie: JSON.parse(fs.readFileSync('cookies.json')),
+	// ffmpeg: {
+	// 	path: 'ffmpeg/bin',
+	// },
+	plugins: [
+		new SpotifyPlugin(),
+		new YouTubePlugin({cookies: JSON.parse(fs.readFileSync('cookies.json'))}),
+		new YtDlpPlugin({ update: true })
+	],
 });
 
 // Coleção de comandos
@@ -48,13 +54,16 @@ export default client;
 
 loadEvents(client);
 
-client.distube.on('error', (channel, e) => {
-	if (channel) channel.send(`An error encountered: ${e}`);
-	else console.error(e);
+client.on('error', (e, queue, song) => {
+	queue.textChannel.send(`Um erro foi encontrado: ${e}`);
 });
 
 // Log in to Discord with your client's token
 client.login(process.env.DISCORD_TOKEN).then(() => {
 	loadCommands(client);
 	loadErrorHandler(client);
+
+	setInterval(function () {
+		console.log(client.ws.ping + 'ms');
+	}, 5000);
 });
