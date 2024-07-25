@@ -28,7 +28,7 @@ export const data = new SlashCommandBuilder()
 	);
 
 export async function execute(interaction) {
-	const { options, member, guild, channel } = interaction;
+	const { options, member, guild, channel, message } = interaction;
 
 	let query = options.getString('query');
 	const voiceChannel = member.voice.channel;
@@ -69,6 +69,7 @@ export async function execute(interaction) {
 				case 'agora':
 					await interaction.client.distube.play(voiceChannel, query, {
 						textChannel: channel,
+						message,
 						member: member,
 						skip: true,
 					});
@@ -76,6 +77,7 @@ export async function execute(interaction) {
 				case 'proxima':
 					await interaction.client.distube.play(voiceChannel, query, {
 						textChannel: channel,
+						message,
 						member: member,
 						position: 1,
 					});
@@ -84,8 +86,10 @@ export async function execute(interaction) {
 		}
 
 		await interaction.deferReply();
+		// console.log(await interaction.client.distube);
 		await interaction.client.distube.play(voiceChannel, query, {
 			textChannel: channel,
+			message,
 			member: member,
 		});
 		const queue = await interaction.client.distube.getQueue(voiceChannel);
