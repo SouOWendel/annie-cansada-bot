@@ -1,8 +1,23 @@
-import { facts } from '../Data/dataFatos.js';
+import { facts } from '../data/dataFatos.js';
 
 // Um método simples que retorna um emoji aleatório. Quero adicionar tipos de emoções no futuro como parametro e ifs.
 export function getRandomEmoji() {
-	const emojiList = ['😭', '😄', '😌', '🤓', '😎', '😤', '🤖', '😶‍🌫️', '🌏', '📸', '💿', '👋', '🌊', '✨'];
+	const emojiList = [
+		'😭',
+		'😄',
+		'😌',
+		'🤓',
+		'😎',
+		'😤',
+		'🤖',
+		'😶‍🌫️',
+		'🌏',
+		'📸',
+		'💿',
+		'👋',
+		'🌊',
+		'✨',
+	];
 	return emojiList[Math.floor(Math.random() * emojiList.length)];
 }
 
