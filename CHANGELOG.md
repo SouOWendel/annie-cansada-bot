@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.1](https://github.com/SouOWendel/annie-cansada-bot/compare/v2.1.0...v2.1.1) (2024-07-25)
+
+
+### Bug Fixes
+
+* corrigido o caminho de vários arquivos por conta da mudança do nome da pasta ([de350c4](https://github.com/SouOWendel/annie-cansada-bot/commit/de350c44e24917846102fdbbf6b0df1029c27201))
+
 ## [2.1.0](https://github.com/SouOWendel/annie-cansada-bot/compare/v2.0.1...v2.1.0) (2023-09-16)
 
 
