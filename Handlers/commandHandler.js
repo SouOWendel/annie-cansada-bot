@@ -6,12 +6,14 @@ export async function loadCommands(client) {
 
 	const commandsArray = [];
 
-	const commandsFolder = fs.readdirSync('./Commands');
+	const commandsFolder = fs.readdirSync('./commands');
 	for (const folder of commandsFolder) {
-		const commandFiles = fs.readdirSync(`./Commands/${folder}`).filter((file) => file.endsWith('js'));
+		const commandFiles = fs
+			.readdirSync(`./commands/${folder}`)
+			.filter((file) => file.endsWith('js'));
 
 		for (const file of commandFiles) {
-			const commandFile = await import(`../Commands/${folder}/${file}`);
+			const commandFile = await import(`../commands/${folder}/${file}`);
 
 			// help.js properties
 			const properties = { folder, ...commandFile };
