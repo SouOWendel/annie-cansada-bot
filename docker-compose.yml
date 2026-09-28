@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4
+    container_name: lavalink
+    restart: no
+    environment:
+      - JAVA_OPTIONS=Xmx1G
+    volumes:
+      - ./application.yml:/opt/Lavalink/application.yml
+      - ./plugins:/opt/Lavalink/plugins
+    networks:
+      - lavalink-network
+  bot:
+    build: .
+    container_name: annie-cansada-bot
+    restart: no
+    depends_on:
+      - lavalink
+    env_file:
+      - .env
+    networks:
+      - lavalink-network
+
+networks:
+  lavalink-network:
+    driver: bridge
