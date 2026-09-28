@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/SouOWendel/annie-cansada-bot/compare/v2.1.0...v2.2.0) (2026-09-28)
+
+
+### Features
+
+* **shutdown:** implement graceful shutdown handling for the bot ([e681947](https://github.com/SouOWendel/annie-cansada-bot/commit/e681947402b066d36dfa871d9e85dcb6a9080822))
+
+
+### Bug Fixes
+
+* corrigido o caminho de vários arquivos por conta da mudança do nome da pasta ([de350c4](https://github.com/SouOWendel/annie-cansada-bot/commit/de350c44e24917846102fdbbf6b0df1029c27201))
+
 ## [2.1.0](https://github.com/SouOWendel/annie-cansada-bot/compare/v2.0.1...v2.1.0) (2023-09-16)
 
 
