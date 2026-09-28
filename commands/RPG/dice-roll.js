@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { getRandomNumber } from '../../utils/random.js';
+import { getRandomNumber } from '../../Utils/random.js';
 
 export const data = new SlashCommandBuilder()
 	.setName('1d6')
@@ -8,37 +8,40 @@ export const data = new SlashCommandBuilder()
 	);
 
 export async function execute(interaction) {
-	const choices = ['1', '2', '3', '4', '5', '6'];
-	const randomChoice = getRandomNumber(choices.length) + 1;
-	const title = '🎲 | Um dado foi arremessado...';
-	let color = '';
-
-	const embed = new EmbedBuilder();
+	await interaction.deferReply();
 
 	try {
-		if (randomChoice == 1) {
-			color = 'Green';
-		} else if (randomChoice == 2) {
-			color = 'Orange';
-		} else if (randomChoice == 3) {
-			color = 'Aqua';
-		} else if (randomChoice == 4) {
-			color = 'White';
-		} else if (randomChoice == 5) {
-			color = 'Red';
-		} else if (randomChoice == 6) {
-			color = 'Purple';
-		}
-		embed
+		const choices = ['1', '2', '3', '4', '5', '6'];
+		const randomChoice = getRandomNumber(choices.length) + 1;
+		const title = '🎲 | Um dado foi arremessado...';
+
+		const colors = {
+			1: 'Green',
+			2: 'Orange',
+			3: 'Aqua',
+			4: 'White',
+			5: 'Red',
+			6: 'Purple',
+		};
+
+		const color = colors[randomChoice] || 'White';
+
+		const embed = new EmbedBuilder()
 			.setTitle(title)
 			.setColor(color)
 			.setDescription(`Seu número é **${randomChoice}**!`);
-		return interaction.reply({ embeds: [embed] });
+
+		await interaction.editReply({ embeds: [embed] });
 	} catch (err) {
-		console.log(err);
+		console.error(err);
+		const errorEmbed = new EmbedBuilder()
+			.setColor('Red')
+			.setDescription('⛔ | Alguma coisa deu errado ao arremessar o dado...');
 
-		embed.setColor('Red').setDescription('⛔ | Alguma coisa deu errado...');
-
-		return interaction.reply({ embeds: [embed], ephemeral: true });
+		if (interaction.deferred || interaction.replied) {
+			await interaction.editReply({ embeds: [errorEmbed] });
+		} else {
+			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+		}
 	}
 }

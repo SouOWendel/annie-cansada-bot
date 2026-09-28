@@ -1,19 +1,21 @@
 export async function loadCommands(client) {
-	// https://www.npmjs.com/package/ascii-table3
 	const { AsciiTable3 } = await import('ascii-table3');
 	const fs = await import('fs');
 	const table = new AsciiTable3().setHeading('Commands', 'Status');
 
 	const commandsArray = [];
 
-	const commandsFolder = fs.readdirSync('./Commands');
+	const commandsFolder = fs.readdirSync('./commands');
 	for (const folder of commandsFolder) {
-		const commandFiles = fs.readdirSync(`./Commands/${folder}`).filter((file) => file.endsWith('js'));
+		if (folder.toLowerCase() === 'inativos') {
+			continue;
+		}
+
+		const commandFiles = fs.readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('js'));
 
 		for (const file of commandFiles) {
-			const commandFile = await import(`../Commands/${folder}/${file}`);
+			const commandFile = await import(`../commands/${folder}/${file}`);
 
-			// help.js properties
 			const properties = { folder, ...commandFile };
 
 			client.commands.set(commandFile.data.name, properties);
@@ -21,7 +23,6 @@ export async function loadCommands(client) {
 			commandsArray.push(commandFile.data.toJSON());
 
 			table.addRow(file, 'loaded');
-			continue;
 		}
 	}
 

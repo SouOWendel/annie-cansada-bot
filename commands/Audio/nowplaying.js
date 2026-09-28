@@ -1,61 +1,25 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { generalErrorEmbed } from '../../data/embeds.js';
 
 export const data = new SlashCommandBuilder()
 	.setName('nowplaying')
-	.setDescription('Eu sei o que você está escutando, quer que eu te diga?');
+	.setDescription('Mostra detalhes da música que está tocando agora.');
 
-export async function execute(interaction) {
-	// const client = await import('../../index.js');
-	const { member, guild } = interaction;
+export async function execute(interaction, client) {
+	await interaction.deferReply();
 
-	const voiceChannel = member.voice.channel;
+	const player = client.manager.players.get(interaction.guild.id);
 
-	const embed = new EmbedBuilder();
-
-	if (!voiceChannel) {
-		embed
-			.setColor('Red')
-			.setDescription(
-				'Você precisa estar em um canal de voz para executar os comandos de música!',
-			);
-		return interaction.reply({ embeds: [embed], ephemeral: true });
+	if (!player || !player.queue.current) {
+		return interaction.editReply({ content: '❌ Não há nenhuma música tocando no momento.' });
 	}
 
-	if (!member.voice.channelId == guild.members.me.voice.channelId) {
-		embed
-			.setColor('Red')
-			.setDescription(
-				`Você não pode utilizar o player de música porque já esta ativo em ${guild.members.me.voice.channelId}`,
-			);
-		return interaction.reply({ embeds: [embed], ephemeral: true });
-	}
+	const current = player.queue.current;
 
-	try {
-		const queue = await interaction.client.distube.getQueue(voiceChannel);
+	const embed = new EmbedBuilder()
+		.setColor(3501486)
+		.setTitle('🎶 Tocando Agora')
+		.setDescription(`**[${current.title}](${current.uri})**\nAutor: \`${current.author}\``)
+		.setThumbnail(current.thumbnail || null);
 
-		if (!queue) {
-			embed
-				.setColor('Red')
-				.setDescription('Não há queue ativa no momento.');
-			return interaction.reply({ embeds: [embed], ephemeral: true });
-		}
-
-		const song = queue.songs[0];
-		embed
-			.setColor('Blue')
-			.setDescription(
-				`**Tocando agora:** \`${song.name}\` - \`${song.formattedDuration}\`.\n**Link:** ${song.url}`,
-			)
-			.setThumbnail(song.thumbnail);
-		return interaction.reply({ embeds: [embed], ephemeral: true });
-	} catch (err) {
-		console.log(err);
-		generalErrorEmbed.description =
-			'Ocorreu um erro, verifique o seu comando...';
-		return interaction.reply({
-			embeds: [generalErrorEmbed],
-			ephemeral: true,
-		});
-	}
+	return interaction.editReply({ embeds: [embed] });
 }

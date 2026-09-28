@@ -1,6 +1,6 @@
 /* eslint-disable brace-style */
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { capitalize } from '../../utils/string.js';
+import { capitalize } from '../../Utils/string.js';
 // import { request } from 'undici';
 
 // API de Dicionário utilizada aqui: https://github.com/ThiagoNelsi/dicio-api/

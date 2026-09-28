@@ -1,100 +1,55 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { generalErrorEmbed } from '../../data/embeds.js';
 
 export const data = new SlashCommandBuilder()
 	.setName('timeline')
-	.setDescription(
-		'Avance o som ou retroceda-o! — Aqui, essa parte que eu gosto, olha!',
-	)
+	.setDescription('Avance ou retroceda a música atual.')
 	.addSubcommand((subcommand) =>
 		subcommand
 			.setName('avancar')
-			.setDescription('Avance o som o quanto quiser.')
+			.setDescription('Avança o som em segundos.')
 			.addIntegerOption((option) =>
 				option
-					.setName('seconds_avancar')
-					.setDescription('Avance o som em tantos segundos.')
+					.setName('segundos')
+					.setDescription('Segundos para avançar.')
 					.setMinValue(1)
-					.setMaxValue(100)
 					.setRequired(true),
 			),
 	)
 	.addSubcommand((subcommand) =>
 		subcommand
-			.setName('retro')
-			.setDescription('Retroceda o som o quanto quiser.')
+			.setName('retroceder')
+			.setDescription('Retrocede o som em segundos.')
 			.addIntegerOption((option) =>
 				option
-					.setName('seconds_retro')
-					.setDescription('Retroceda o som em tantos segundos.')
+					.setName('segundos')
+					.setDescription('Segundos para retroceder.')
 					.setMinValue(1)
-					.setMaxValue(100)
 					.setRequired(true),
 			),
 	);
 
-export async function execute(interaction) {
-	// const client = await import('../../index.js');
-	const { member, guild, options } = interaction;
+export async function execute(interaction, client) {
+	await interaction.deferReply();
 
-	const subcommand = options.getSubcommand();
-	const secondsA = options.getInteger('seconds_avancar');
-	const secondsR = options.getInteger('seconds_retro');
-	const voiceChannel = member.voice.channel;
+	const player = client.manager.players.get(interaction.guild.id);
+	const subcommand = interaction.options.getSubcommand();
+	const seconds = interaction.options.getInteger('segundos');
 
-	const embed = new EmbedBuilder();
-
-	if (!voiceChannel) {
-		embed
-			.setColor('Red')
-			.setDescription(
-				'Você precisa estar em um canal de voz para executar os comandos de música!',
-			);
-		return interaction.reply({ embeds: [embed], ephemeral: true });
+	if (!player || !player.queue.current) {
+		return interaction.editReply({ content: '❌ Não há nenhuma música tocando no momento.' });
 	}
 
-	if (!member.voice.channelId == guild.members.me.voice.channelId) {
-		embed
-			.setColor('Red')
-			.setDescription(
-				`Você não pode utilizar o player de música porque já esta ativo em ${guild.members.me.voice.channelId}`,
-			);
-		return interaction.reply({ embeds: [embed], ephemeral: true });
-	}
+	const currentPosition = player.position; // Em milissegundos
+	const seekMs = seconds * 1000;
 
-	try {
-		const queue = await interaction.client.distube.getQueue(voiceChannel);
+	let newPosition = subcommand === 'avancar' ? currentPosition + seekMs : currentPosition - seekMs;
+	if (newPosition < 0) newPosition = 0;
 
-		if (!queue) {
-			embed
-				.setColor('Red')
-				.setDescription('Não há queue ativa no momento.');
-			return interaction.reply({ embeds: [embed], ephemeral: true });
-		}
-		console.log('tempo atual: ' + queue.currentTime);
-		switch (subcommand) {
-			case 'avancar':
-				await queue.seek(queue.currentTime + secondsA);
-				embed
-					.setColor('Blue')
-					.setDescription(`Avancei o som por ${secondsA} segundos.`);
-				return interaction.reply({ embeds: [embed], ephemeral: true });
-			case 'retro':
-				await queue.seek(queue.currentTime - secondsR);
-				embed
-					.setColor('Blue')
-					.setDescription(
-						`Retrocedi o som por ${secondsA} segundos.`,
-					);
-				return interaction.reply({ embeds: [embed], ephemeral: true });
-		}
-	} catch (err) {
-		console.log(err);
-		generalErrorEmbed.description =
-			'Ocorreu um erro, verifique o seu comando...';
-		return interaction.reply({
-			embeds: [generalErrorEmbed],
-			ephemeral: true,
-		});
-	}
+	player.seek(newPosition);
+
+	const embed = new EmbedBuilder()
+		.setColor('Green')
+		.setDescription(`⏩ **Posição da música alterada para:** \`${Math.floor(newPosition / 1000)}s\``);
+
+	return interaction.editReply({ embeds: [embed] });
 }

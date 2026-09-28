@@ -1,5 +1,4 @@
 export async function loadEvents(client) {
-	// https://www.npmjs.com/package/ascii-table3
 	const { AsciiTable3 } = await import('ascii-table3');
 	const fs = await import('fs');
 	const table = new AsciiTable3().setHeading('Events', 'Status');
@@ -18,13 +17,10 @@ export async function loadEvents(client) {
 				}
 			} else if (event.default.once) {
 				client.once(event.default.name, (...args) => event.default.execute(...args, client));
-			} else if (event.default.distube) {
-				client.distube.on(event.default.name, (...args) => event.default.execute(...args, client));
 			} else {
 				client.on(event.default.name, (...args) => event.default.execute(...args, client));
 			}
 			table.addRow(file, 'loaded');
-			continue;
 		}
 	}
 	return console.log(table.toString(), 'Eventos carregados com sucesso!');

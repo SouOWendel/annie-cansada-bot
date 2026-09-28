@@ -9,7 +9,7 @@ export default {
 		const command = client.commands.get(interaction.commandName);
 
 		if (!command) {
-			interaction.reply({ content: 'Comando inexistente.' });
+			return interaction.reply({ content: 'Comando inexistente.', ephemeral: true });
 		}
 
 		try {
