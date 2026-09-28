@@ -58,3 +58,12 @@ client.login(process.env.DISCORD_TOKEN).then(() => {
 	loadCommands(client);
 	loadErrorHandler(client);
 });
+
+const shutdown = async () => {
+	console.log('Indo dormir...');
+	client.destroy();
+	process.exit(0);
+};
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
